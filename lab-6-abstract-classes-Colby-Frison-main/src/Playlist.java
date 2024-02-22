@@ -3,7 +3,9 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class Playlist {
@@ -107,8 +109,6 @@ public class Playlist {
 
 		return num;
 	}
-
-
 	
 	public Song removeSong() {
 		return removeSong(getNumSongs() - 1);
@@ -126,5 +126,39 @@ public class Playlist {
 		else{
 			return null;
 		}
+	}
+
+	
+	public String toString(){
+		String str = "";
+		String temp1 = "";
+		String temp2 = "";
+
+		for(int i = 0; i < songs.size(); i++){
+			temp2 = str;
+			temp1 = songs.get(i).toString();
+			if(i + 1 == songs.size()){
+				str = temp2.concat(temp1);
+			}
+			else{
+				str = temp2.concat(temp1 + System.lineSeparator());
+			}
+		}
+
+
+		return str;
+	}
+
+	public void saveSongs(String filename){
+		File playlistFile = new File(filename);
+
+		try {
+      		FileWriter myWriter = new FileWriter(filename);
+      		myWriter.write(toString());
+      		myWriter.close();
+    	} catch (IOException e) {
+      		System.out.println("An error occurred.");
+      		e.printStackTrace();
+    	}
 	}
 }
