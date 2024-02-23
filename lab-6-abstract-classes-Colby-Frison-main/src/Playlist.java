@@ -161,4 +161,53 @@ public class Playlist {
       		e.printStackTrace();
     	}
 	}
+
+	public int[] getTotalTime(){
+		int totalSec = 0;
+
+		int[] temp = new int[0];
+
+		for(int i = 0; i < getNumSongs(); i++){
+			if(songs.get(i).getTime().length == 3){
+				temp = songs.get(i).getTime();
+				totalSec += temp[0];
+				totalSec += temp[1] * 60;
+				totalSec += temp[2] * 60 * 60;
+			}
+			if(songs.get(i).getTime().length == 2){
+				temp = songs.get(i).getTime();
+				totalSec += temp[0];
+				totalSec += temp[1] * 60;
+			}
+			if(songs.get(i).getTime().length == 1){
+				temp = songs.get(i).getTime();
+				totalSec += temp[0];
+			}
+		}
+
+		int hours = totalSec / 3600;
+		int minutes = (totalSec % 3600) / 60;
+		int seconds = totalSec % 60;
+
+		if(hours != 0){
+			int[] res = new int[3];
+			res[0] = seconds;
+			res[1] = minutes;
+			res[2] = hours;
+			return res;
+		}
+		if(hours == 0 && minutes != 0){
+			int[] res = new int[2];
+			res[0] = seconds;
+			res[1] = minutes;
+			return res;
+		}
+		if(hours == 0 && minutes == 0){
+			int[] res = new int[1];
+			res[0] = seconds;
+			return res;
+		}
+
+		return null;
+	}
 }
